@@ -46,7 +46,7 @@ const OrderDetailsModal = ({
   )
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-end justify-center bg-black/72 p-0 backdrop-blur-sm sm:items-center sm:p-4">
+    <div className="fixed inset-0 z-80 flex items-end justify-center bg-black/72 p-0 backdrop-blur-sm sm:items-center sm:p-4">
       <div className="w-full max-w-xl rounded-t-[28px] border border-white/10 bg-zinc-950 p-4 shadow-2xl sm:rounded-[28px] sm:p-5">
         <div className="mb-4 flex items-start justify-between gap-3">
           <div>

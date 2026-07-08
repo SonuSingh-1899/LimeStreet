@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { FaWhatsapp } from 'react-icons/fa'
 import useAuth from '../../context/useAuth'
 import { useStore } from '../../context/StoreContext'
 import CheckoutFrame from './CheckoutFrame'
 import { buildApiUrl } from '../../utils/api'
 import { getVariantPrice } from '../../utils/productPricing'
-import { buildDraftKey, createAddressForm, createPaymentForm, readCheckoutDraft, writeCheckoutDraft } from './checkoutShared.jsx'
+import { buildOrderWhatsAppUrl } from '../../utils/whatsapp'
+import { buildDraftKey, createAddressForm, readCheckoutDraft, writeCheckoutDraft } from './checkoutShared.jsx'
 
 const CheckoutAddressPage = ({ mode = 'cart' }) => {
   const navigate = useNavigate()
@@ -123,7 +125,6 @@ const CheckoutAddressPage = ({ mode = 'cart' }) => {
   const persistDraft = (nextAddressForm = addressForm) => {
     writeCheckoutDraft(draftKey, {
       addressForm: nextAddressForm,
-      paymentForm: createPaymentForm(),
       quantity,
       selectedSize,
       selectedColor
@@ -149,14 +150,26 @@ const CheckoutAddressPage = ({ mode = 'cart' }) => {
     setError('')
   }
 
-  const continueToPayment = () => {
+  const sendOrderOnWhatsApp = () => {
     if (!isAddressFormComplete) {
-      setError('Please complete the address details before continuing.')
+      setError('Please complete the address details before sending your order on WhatsApp.')
+      return
+    }
+
+    if (!items.length) {
+      setError('There are no products available to send on WhatsApp.')
       return
     }
 
     persistDraft()
-    navigate(mode === 'buy-now' ? `/buy/${id}/payment` : '/checkout/payment')
+    window.open(buildOrderWhatsAppUrl({
+      items,
+      addressForm,
+      subtotal,
+      deliveryCharge,
+      platformFee,
+      totalAmount
+    }), '_blank', 'noopener,noreferrer')
   }
 
   if (loadingProduct) {
@@ -165,10 +178,10 @@ const CheckoutAddressPage = ({ mode = 'cart' }) => {
 
   return (
     <CheckoutFrame
-      currentStep={2}
+      currentStep={3}
       loggedIn={isAuthenticated}
-      title="Delivery address"
-      description="Complete your address here, then continue to the payment page."
+      title="Send order on WhatsApp"
+      description="Complete your delivery details and share the full order directly with LimeStreet on WhatsApp."
       backTo={mode === 'buy-now' ? `/product/${id}` : '/cart'}
       error={error}
       items={items}
@@ -214,8 +227,9 @@ const CheckoutAddressPage = ({ mode = 'cart' }) => {
       )}
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <button type="button" onClick={continueToPayment} className="rounded-full bg-white px-4 py-2.5 text-xs font-semibold text-black transition hover:bg-zinc-200 sm:px-6 sm:py-3 sm:text-sm">
-          Open payment page
+        <button type="button" onClick={sendOrderOnWhatsApp} className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[#1fb855] sm:px-6 sm:py-3 sm:text-sm">
+          <FaWhatsapp size={16} />
+          Send on WhatsApp
         </button>
         <button type="button" onClick={handleUseSavedAddress} disabled={!savedProfileComplete} className="rounded-full border border-white/10 px-4 py-2.5 text-xs text-zinc-300 transition hover:text-white disabled:opacity-50 sm:px-6 sm:py-3 sm:text-sm">
           Use saved profile address

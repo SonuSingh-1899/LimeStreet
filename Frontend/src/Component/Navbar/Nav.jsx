@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Heart, Menu, Moon, ShoppingCart, Sun, User, X } from 'lucide-react';
+import { Heart, Menu, ShoppingCart, User, X } from 'lucide-react';
 import useAuth from '../../context/useAuth';
 
 const Nav = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const location = useLocation();
   const { isAdmin, isAuthenticated } = useAuth();
   
@@ -31,20 +30,6 @@ const Nav = () => {
   useEffect(() => {
     setActiveLink(location.pathname);
   }, [location]);
-
-  useEffect(() => {
-    const savedTheme = window.localStorage.getItem('limeStreetTheme');
-
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-    }
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-    document.documentElement.style.colorScheme = isDarkMode ? 'dark' : 'light';
-    window.localStorage.setItem('limeStreetTheme', isDarkMode ? 'dark' : 'light');
-  }, [isDarkMode]);
 
   const navLinks = [
     { path: '/', name: 'Home' },
@@ -119,7 +104,7 @@ const Nav = () => {
           ))}
         </div>
 
-        {/* Icons and Theme Toggle - Grouped together */}
+        {/* Icons */}
         <div className="flex items-center gap-3 md:gap-5">
           {/* Desktop Icons */}
           <div className="hidden md:flex items-center gap-3 md:gap-5">
@@ -152,17 +137,6 @@ const Nav = () => {
             </motion.div>
           </div>
 
-          {/* Theme Toggle Button - Desktop */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsDarkMode((current) => !current)}
-            className="theme-toggle-desktop-shell hidden md:inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-all hover:bg-white/20"
-          >
-            {isDarkMode ? <Moon size={16} /> : <Sun size={16} />}
-            <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
-          </motion.button>
-
           {/* Mobile Menu Button */}
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -173,19 +147,6 @@ const Nav = () => {
             {open ? <X size={22} /> : <Menu size={22} />}
           </motion.button>
         </div>
-      </div>
-
-      {/* Mobile Theme Toggle - Separate section below the main navbar */}
-      <div className="theme-toggle-mobile-shell block px-4 pb-3 md:hidden">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => setIsDarkMode((current) => !current)}
-          className="flex w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-all hover:bg-white/20"
-        >
-          {isDarkMode ? <Moon size={16} /> : <Sun size={16} />}
-          <span>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
-        </motion.button>
       </div>
 
       {/* Mobile Menu */}

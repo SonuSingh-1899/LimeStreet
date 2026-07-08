@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Heart, ShoppingBag } from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../../context/StoreContext'
 import { PRODUCT_IMAGE_FALLBACK_SRC, handleProductImageError, resolveProductImageList } from '../../utils/image'
 import { getStartingPrice, getVariantPrice } from '../../utils/productPricing'
+import { buildProductWhatsAppUrl } from '../../utils/whatsapp'
 
 const Card = ({ product }) => {
   const [busyAction, setBusyAction] = useState('')
@@ -84,6 +86,16 @@ const Card = ({ product }) => {
     }
   }
 
+  const handleWhatsAppShare = (event) => {
+    event.stopPropagation()
+    window.open(buildProductWhatsAppUrl({
+      product: currentProduct,
+      selectedSize,
+      selectedColor,
+      price: activePrice
+    }), '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 16 }}
@@ -139,6 +151,14 @@ const Card = ({ product }) => {
             fill={liked ? '#ef4444' : 'none'}
             color={liked ? '#ef4444' : 'white'}
           />
+        </button>
+        <button
+          type="button"
+          onClick={handleWhatsAppShare}
+          aria-label={`Share ${product.name} on WhatsApp`}
+          className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-white opacity-100 shadow-[0_12px_30px_rgba(37,211,102,0.35)] transition hover:bg-[#1fb855] md:opacity-0 md:translate-y-2 md:group-hover:translate-y-0 md:group-hover:opacity-100"
+        >
+          <FaWhatsapp size={22} />
         </button>
         {productImages.length > 1 && (
           <>
@@ -243,10 +263,10 @@ const Card = ({ product }) => {
           </button>
           <button
             type="button"
-            onClick={() => navigate(`/buy/${currentProduct.id}?size=${encodeURIComponent(selectedSize)}&color=${encodeURIComponent(selectedColor)}`)}
-            className="flex-1 rounded-2xl bg-white px-3 py-2 text-[11px] font-medium text-black transition hover:bg-zinc-200"
+            onClick={handleWhatsAppShare}
+            className="flex-1 rounded-2xl bg-[#25D366] px-3 py-2 text-[11px] font-medium text-white transition hover:bg-[#1fb855]"
           >
-            Buy now
+            WhatsApp
           </button>
         </div>
       </div>

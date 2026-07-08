@@ -44,7 +44,7 @@ export const clearCheckoutDraft = (key) => {
 export const checkoutSteps = [
   { id: 1, label: 'Login' },
   { id: 2, label: 'Address' },
-  { id: 3, label: 'Payment' }
+  { id: 3, label: 'WhatsApp' }
 ]
 
 export const SummaryItems = ({ items }) => (

@@ -2,11 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Heart, ShoppingBag } from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useStore } from '../../context/StoreContext'
 import { PRODUCT_IMAGE_FALLBACK_SRC, handleProductImageError, resolveProductImageList } from '../../utils/image'
 import { getStartingPrice, getVariantPrice } from '../../utils/productPricing'
 import { buildApiUrl } from '../../utils/api'
+import { buildProductWhatsAppUrl } from '../../utils/whatsapp'
 
 const formatPrice = (value) => `Rs ${Number(value || 0).toLocaleString('en-IN')}`
 
@@ -82,8 +84,13 @@ const ProductDetailsPage = () => {
     }
   }
 
-  const handleBuyNow = () => {
-    navigate(`/buy/${product.id}?size=${encodeURIComponent(selectedSize)}&color=${encodeURIComponent(selectedColor)}`)
+  const handleWhatsAppBuy = () => {
+    window.open(buildProductWhatsAppUrl({
+      product,
+      selectedSize,
+      selectedColor,
+      price: activePrice
+    }), '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -231,8 +238,9 @@ const ProductDetailsPage = () => {
               <ShoppingBag size={16} />
               {busy === 'cart' ? 'Adding...' : 'Add to cart'}
             </button>
-            <button type="button" onClick={handleBuyNow} className="rounded-2xl bg-white px-5 py-3 text-sm font-medium text-black transition hover:bg-zinc-200">
-              Buy now
+            <button type="button" onClick={handleWhatsAppBuy} className="inline-flex items-center gap-2 rounded-2xl bg-[#25D366] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#1fb855]">
+              <FaWhatsapp size={17} />
+              Buy on WhatsApp
             </button>
             <button type="button" onClick={() => toggleWishlist(product)} className="inline-flex items-center gap-2 rounded-2xl border border-white/12 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/8">
               <Heart size={16} fill={liked ? '#ef4444' : 'none'} color={liked ? '#ef4444' : 'white'} />

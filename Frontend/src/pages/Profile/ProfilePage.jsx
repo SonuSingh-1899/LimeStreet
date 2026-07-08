@@ -239,7 +239,7 @@ const ProfilePage = () => {
   const DesktopLayout = () => (
     <div className="min-h-screen bg-black">
       {/* Hero Section with Gradient */}
-      <div className="relative bg-gradient-to-r from-zinc-900 via-black to-zinc-900 border-b border-white/10">
+      <div className="relative bg-linear-to-r from-zinc-900 via-black to-zinc-900 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-8 py-12">
           <div className="flex items-center justify-between">
             <div>
@@ -248,7 +248,7 @@ const ProfilePage = () => {
               <p className="text-gray-400 mt-2 max-w-xl">{email}</p>
             </div>
             <div className="relative">
-              <div className="w-28 h-28 rounded-full bg-gradient-to-br from-white/10 to-white/5 border-2 border-white/20 flex items-center justify-center text-4xl font-medium text-white shadow-2xl">
+              <div className="w-28 h-28 rounded-full bg-linear-to-br from-white/10 to-white/5 border-2 border-white/20 flex items-center justify-center text-4xl font-medium text-white shadow-2xl">
                 {avatarLetter}
               </div>
               <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-black"></div>
@@ -300,7 +300,7 @@ const ProfilePage = () => {
 
           {/* Main Content Area */}
           <div className="col-span-3">
-            <div className="bg-zinc-950 rounded-3xl border border-white/10 p-8 min-h-[600px]">
+            <div className="bg-zinc-950 rounded-3xl border border-white/10 p-8 min-h-150">
               
               {/* Overview */}
               {activeTab === 'overview' && (

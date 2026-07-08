@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import useAuth from './context/useAuth';
 import Nav from './Component/Navbar/Nav';
@@ -16,7 +16,6 @@ import OrderTrackingPage from './pages/Orders/OrderTrackingPage';
 import ProductDetailsPage from './pages/Product/ProductDetailsPage';
 import BuyNowPage from './pages/Buy/BuyNowPage';
 import CheckoutAddressPage from './pages/Checkout/CheckoutAddressPage';
-import CheckoutPaymentPage from './pages/Checkout/CheckoutPaymentPage';
 import OrderSuccessPage from './pages/OrderSuccess/OrderSuccessPage';
 import Arrivel from './pages/New/Arrivel';
 import Sale from './pages/Sale/Sale';
@@ -101,6 +100,11 @@ const StoreLayout = ({ children }) => (
   </>
 )
 
+const BuyPaymentRedirect = () => {
+  const { id } = useParams();
+  return <Navigate to={`/buy/${id}`} replace />;
+};
+
 const AuthScreen = ({ children }) => (
   <motion.div
     initial={{ opacity: 0, y: 18 }}
@@ -113,8 +117,13 @@ const AuthScreen = ({ children }) => (
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showLoader, setShowLoader] = useState(true);
   const [isFirstVisit, setIsFirstVisit] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   useEffect(() => {
     // Check if user has visited before
@@ -287,18 +296,7 @@ function App() {
               }
             />
 
-            <Route
-              path="/checkout/payment"
-              element={
-                <ProtectedRoute>
-                  <>
-                    <StoreLayout>
-                      <CheckoutPaymentPage mode="cart" />
-                    </StoreLayout>
-                  </>
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/checkout/payment" element={<Navigate to="/checkout" replace />} />
 
             <Route
               path="/product/:id"
@@ -324,18 +322,7 @@ function App() {
               }
             />
 
-            <Route
-              path="/buy/:id/payment"
-              element={
-                <ProtectedRoute>
-                  <>
-                    <StoreLayout>
-                      <CheckoutPaymentPage mode="buy-now" />
-                    </StoreLayout>
-                  </>
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/buy/:id/payment" element={<BuyPaymentRedirect />} />
 
             <Route
               path="/admin"

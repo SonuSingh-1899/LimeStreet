@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { AlertTriangle, CreditCard, Minus, Plus, Shield, ShoppingBag, Trash2, Truck } from 'lucide-react'
+import { AlertTriangle, Minus, Plus, Shield, ShoppingBag, Trash2, Truck } from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../../context/useAuth'
 import { useStore } from '../../context/StoreContext'
@@ -45,7 +46,7 @@ const CartPage = () => {
           <div>
             <h1 className="text-2xl font-semibold text-white md:text-3xl">Your Cart</h1>
             <p className="mt-1 text-sm text-zinc-400">
-              {totalItems} {totalItems === 1 ? 'item' : 'items'} ready for checkout
+              {totalItems} {totalItems === 1 ? 'item' : 'items'} ready to send on WhatsApp
             </p>
           </div>
           {cartItems.length > 0 && (
@@ -215,9 +216,10 @@ const CartPage = () => {
                 <button
                   type="button"
                   onClick={handleCheckout}
-                  className="mt-6 w-full rounded-2xl bg-white py-3 text-sm font-semibold text-black transition hover:bg-zinc-200"
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] py-3 text-sm font-semibold text-white transition hover:bg-[#1fb855]"
                 >
-                  Continue to checkout
+                  <FaWhatsapp size={17} />
+                  Continue to WhatsApp
                 </button>
 
                 <div className="mt-4 grid grid-cols-3 gap-2 text-[11px] text-zinc-500">
@@ -226,8 +228,8 @@ const CartPage = () => {
                     Secure
                   </div>
                   <div className="flex items-center justify-center gap-1 rounded-2xl border border-white/8 px-2 py-2">
-                    <CreditCard size={12} />
-                    Checkout
+                    <FaWhatsapp size={12} />
+                    WhatsApp
                   </div>
                   <div className="flex items-center justify-center gap-1 rounded-2xl border border-white/8 px-2 py-2">
                     <Truck size={12} />
