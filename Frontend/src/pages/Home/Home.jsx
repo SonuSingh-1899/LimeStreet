@@ -3,6 +3,7 @@ import Line from '../../Component/Hero/Line'
 import Hero from '../../Component/Hero/Hero'
 import Product from '../../Component/Product/Product'
 import V from '../../Component/Video/V'
+import CategoryShowcase from '../../Component/Category/CategoryShowcase'
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
         <Line/>
       </div>
       {/* <Hero/> */}
+      <CategoryShowcase />
       <Product/>
     </div>
   )

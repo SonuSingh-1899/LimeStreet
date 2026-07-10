@@ -14,6 +14,7 @@ import SimpleProfilePage from './pages/Profile/SimpleProfilePage';
 import OrdersPage from './pages/Orders/OrdersPage';
 import OrderTrackingPage from './pages/Orders/OrderTrackingPage';
 import ProductDetailsPage from './pages/Product/ProductDetailsPage';
+import CategoryPage from './pages/Category/CategoryPage';
 import BuyNowPage from './pages/Buy/BuyNowPage';
 import CheckoutAddressPage from './pages/Checkout/CheckoutAddressPage';
 import OrderSuccessPage from './pages/OrderSuccess/OrderSuccessPage';
@@ -297,6 +298,17 @@ function App() {
             />
 
             <Route path="/checkout/payment" element={<Navigate to="/checkout" replace />} />
+
+            <Route
+              path="/category/:categoryName"
+              element={
+                <>
+                  <StoreLayout>
+                    <CategoryPage />
+                  </StoreLayout>
+                </>
+              }
+            />
 
             <Route
               path="/product/:id"

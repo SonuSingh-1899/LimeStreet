@@ -34,7 +34,7 @@ const SaleImageSlider = ({ products }) => {
         {marqueeImages.map((item, index) => (
           <div
             key={`${item.image}-${index}`}
-            className="relative h-72 w-[82vw] shrink-0 overflow-hidden sm:h-96 sm:w-[48vw] lg:h-[560px] lg:w-[40vw]"
+            className="relative h-72 w-[82vw] shrink-0 overflow-hidden sm:h-96 sm:w-[48vw] lg:h-140 lg:w-[40vw]"
           >
             <img
               src={item.image || PRODUCT_IMAGE_FALLBACK_SRC}

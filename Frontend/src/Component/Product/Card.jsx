@@ -102,7 +102,7 @@ const Card = ({ product }) => {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25 }}
-      className="group mx-auto flex h-full w-full max-w-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-zinc-950 shadow-[0_20px_50px_rgba(0,0,0,0.35)] sm:max-w-[320px]"
+      className="group mx-auto flex h-full w-full max-w-full flex-col overflow-hidden  border border-white/10 bg-zinc-950 shadow-[0_20px_50px_rgba(0,0,0,0.35)] sm:max-w-[320px]"
       onMouseEnter={() => setIsDesktopHovering(true)}
       onMouseLeave={() => {
         setIsDesktopHovering(false)
@@ -261,13 +261,13 @@ const Card = ({ product }) => {
           >
             Details
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={handleWhatsAppShare}
             className="flex-1 rounded-2xl bg-[#25D366] px-3 py-2 text-[11px] font-medium text-white transition hover:bg-[#1fb855]"
           >
             WhatsApp
-          </button>
+          </button> */}
         </div>
       </div>
     </motion.article>
